@@ -1,109 +1,410 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ZEBRAFISH</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Personal research homepage for zebrafish auditory and vestibular instrumentation." />
+  <title>MIRS SUN | Zebrafish Behavioral Instrumentation</title>
 
   <style>
-    body {
+    :root {
+      --bg: #f7f9fb;
+      --card: #ffffff;
+      --text: #1f2933;
+      --muted: #5f6c7b;
+      --accent: #0f766e;
+      --accent-dark: #115e59;
+      --border: #e5e7eb;
+      --shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(135deg, #f8fafc, #eef2ff);
-      color: #111827;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: linear-gradient(135deg, #eef8f7 0%, #f7f9fb 45%, #ffffff 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
     .container {
-      max-width: 760px;
+      width: min(1120px, 92%);
       margin: 0 auto;
-      padding: 80px 24px;
-      text-align: center;
     }
 
-    .card {
-      background: white;
-      padding: 48px 32px;
-      border-radius: 24px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+    header {
+      padding: 24px 0;
     }
 
-    h1 {
-      font-size: 48px;
-      margin-bottom: 12px;
-      letter-spacing: 2px;
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
     }
 
-    .subtitle {
-      font-size: 20px;
-      color: #4f46e5;
-      margin-bottom: 24px;
-      font-weight: bold;
+    .logo {
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: 0.02em;
     }
 
-    p {
-      font-size: 17px;
-      line-height: 1.7;
-      color: #374151;
-      margin: 8px 0;
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      font-size: 0.95rem;
+      color: var(--muted);
     }
 
-   p {
-      font-size: 20px;
-      line-height: 2;
-      color: #374151;
-      margin: 8px 0;
+    .nav-links a:hover {
+      color: var(--accent);
     }
 
-    .email {
-      margin-top: 28px;
-      font-size: 16px;
-    }
-
-    .email a {
-      color: #4f46e5;
-      text-decoration: none;
-      font-weight: bold;
+    .hero {
+      padding: 72px 0 54px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 42px;
+      align-items: center;
     }
 
     .tag {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 8px 16px;
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 12px;
       border-radius: 999px;
-      background: #eef2ff;
-      color: #4338ca;
-      font-size: 14px;
+      background: rgba(15, 118, 110, 0.1);
+      color: var(--accent-dark);
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 4.8rem);
+      line-height: 1.05;
+      letter-spacing: -0.055em;
+      margin-bottom: 22px;
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      color: var(--muted);
+      max-width: 680px;
+      margin-bottom: 32px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 20px;
+      border-radius: 12px;
+      font-weight: 650;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #ffffff;
+      box-shadow: 0 10px 24px rgba(15, 118, 110, 0.2);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      border-color: var(--border);
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .hero-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card h2 {
+      font-size: 1.15rem;
+      margin-bottom: 18px;
+    }
+
+    .metric {
+      padding: 18px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .metric:first-of-type {
+      border-top: none;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 1.55rem;
+      color: var(--accent-dark);
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    section {
+      padding: 54px 0;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      max-width: 760px;
+      margin-bottom: 28px;
+      font-size: 1.05rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.04);
+    }
+
+    .card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .list {
+      margin-top: 14px;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .list li {
+      margin-bottom: 7px;
+    }
+
+    .contact-box {
+      background: #0f766e;
+      color: #ffffff;
+      border-radius: 28px;
+      padding: 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .contact-box p {
+      color: rgba(255, 255, 255, 0.82);
+      margin-top: 8px;
+      max-width: 650px;
+    }
+
+    .contact-box .btn {
+      background: #ffffff;
+      color: var(--accent-dark);
+      white-space: nowrap;
     }
 
     footer {
-      margin-top: 28px;
-      font-size: 13px;
-      color: #6b7280;
+      padding: 36px 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      text-align: center;
+    }
+
+    @media (max-width: 860px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 40px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-box {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        display: none;
+      }
     }
   </style>
 </head>
 
 <body>
-  <main class="container">
-    <section class="card">
-      <h1>DANIO RERIO</h1>
+  <header>
+    <div class="container">
+      <nav>
+        <a class="logo" href="#">MIRS SUN</a>
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#work">Work</a>
+          <a href="#platforms">Platforms</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </nav>
+    </div>
+  </header>
 
-      <div class="subtitle">Hearing · Tinnitus · Balance</div>
-
-      <p>Optical Engineering · Electrical and Computer Engineering · Biomedical Engineering</p>
-      <p>Behavior · Molecular genetics · Calcium imaging</p>
-
-      <div class="email">
-        📧 <a href="mailto:hearing@zebrafish.cc">hearing@zebrafish.cc</a>
+  <main>
+    <section class="hero container">
+      <div>
+        <div class="tag">Auditory & Vestibular Research · Zebrafish Instrumentation</div>
+        <h1>Building precise tools for zebrafish behavior research.</h1>
+        <p class="subtitle">
+          I develop behavioral instrumentation and analysis systems for zebrafish auditory and vestibular studies, including VOR, startle/GPIAS, and OKR platforms.
+        </p>
+        <div class="buttons">
+          <a class="btn btn-primary" href="https://zebrafish.cc">View Zebrafish Platform</a>
+          <a class="btn btn-secondary" href="mailto:Admin@sunmirs.com">Contact Me</a>
+        </div>
       </div>
-      
-      <div class="p">The domain name zebrafish.cc is for sale!</div>
 
+      <aside class="hero-card">
+        <h2>Research Focus</h2>
+        <div class="metric">
+          <strong>VOR</strong>
+          <span>Vestibulo-ocular reflex measurement and 3D eye tracking</span>
+        </div>
+        <div class="metric">
+          <strong>GPIAS</strong>
+          <span>Acoustic startle, gap prepulse inhibition, and synchronized stimulation</span>
+        </div>
+        <div class="metric">
+          <strong>OKR</strong>
+          <span>Optokinetic response imaging and behavioral quantification</span>
+        </div>
+      </aside>
     </section>
 
-    <footer>
-      © 2026 ZEBRAFISH
-    </footer>
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title">About</h2>
+        <p class="section-desc">
+          My work focuses on designing experimental systems that combine precise stimulus control, high-speed imaging, and automated behavioral analysis. These tools support studies of auditory and vestibular function in larval zebrafish and related model systems.
+        </p>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="container">
+        <h2 class="section-title">Featured Work</h2>
+        <p class="section-desc">
+          Selected areas of development across hardware, software, imaging, and behavioral analysis.
+        </p>
+
+        <div class="grid">
+          <div class="card">
+            <h3>Zebrafish VOR System</h3>
+            <p>Instrumentation for vestibular stimulation and quantitative eye movement analysis.</p>
+            <ul class="list">
+              <li>3D eye modeling and reconstruction</li>
+              <li>Rotational stimulus control</li>
+              <li>Automated response quantification</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Startle & GPIAS Platform</h3>
+            <p>Behavioral platform for acoustic startle and gap prepulse inhibition experiments.</p>
+            <ul class="list">
+              <li>Audio stimulus generation</li>
+              <li>LED-based timing synchronization</li>
+              <li>C-bend and locomotion analysis</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>OKR Imaging Setup</h3>
+            <p>Visual stimulation and imaging system for optokinetic response measurement.</p>
+            <ul class="list">
+              <li>Visual stimulus presentation</li>
+              <li>Eye tracking workflow</li>
+              <li>Analysis pipeline development</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="platforms">
+      <div class="container">
+        <h2 class="section-title">Zebrafish Platform</h2>
+        <p class="section-desc">
+          For a more focused overview of zebrafish behavioral instrumentation, visit the dedicated project site.
+        </p>
+        <a class="btn btn-primary" href="https://zebrafish.cc">Go to zebrafish.cc</a>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="contact-box">
+          <div>
+            <h2>Open to research collaboration and instrumentation discussions.</h2>
+            <p>
+              For questions about zebrafish behavioral systems, experimental platforms, or related collaborations, please feel free to reach out.
+            </p>
+          </div>
+          <a class="btn" href="mailto:Admin@sunmirs.com">Admin@sunmirs.com</a>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <footer>
+    <div class="container">
+      © 2026 MIRS SUN. All rights reserved.
+    </div>
+  </footer>
 </body>
 </html>
