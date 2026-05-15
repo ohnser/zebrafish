@@ -3,408 +3,744 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Personal research homepage for zebrafish auditory and vestibular instrumentation." />
-  <title>sunmirs | Zebrafish Behavioral Tools</title>
+  <title>Peng Sun, PhD | Zebrafish Auditory & Vestibular Neuroscience · Stanford</title>
+  <meta name="description" content="Peng Sun, PhD — Postdoctoral Fellow at Stanford University. Zebrafish auditory and vestibular neuroscience, behavioral assays, molecular genetics, and engineering platforms." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #f7f9fb;
-      --card: #ffffff;
-      --text: #1f2933;
-      --muted: #5f6c7b;
-      --accent: #0f766e;
-      --accent-dark: #115e59;
-      --border: #e5e7eb;
-      --shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+      --bg: #07090f;
+      --bg2: #0d1018;
+      --card: #111520;
+      --card2: #181d2e;
+      --text: #e8eaf2;
+      --muted: #7a80a0;
+      --line: rgba(255,255,255,0.07);
+      --accent: #4fa3e8;
+      --accent2: #7ec8f4;
+      --gold: #c9a84c;
+      --red: #8c1515;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: linear-gradient(135deg, #eef8f7 0%, #f7f9fb 45%, #ffffff 100%);
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
       color: var(--text);
       line-height: 1.6;
+      overflow-x: hidden;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
+    /* ── NOISE TEXTURE ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
     }
 
-    .container {
-      width: min(1120px, 92%);
+    .page {
+      max-width: 1140px;
       margin: 0 auto;
+      padding: 0 28px 80px;
+      position: relative;
+      z-index: 1;
     }
 
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── HEADER ── */
     header {
-      padding: 24px 0;
-    }
-
-    nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 24px;
+      padding: 28px 0 52px;
+      border-bottom: 1px solid var(--line);
+      gap: 20px;
     }
 
-    .logo {
-      font-weight: 700;
-      font-size: 1.05rem;
-      letter-spacing: 0.02em;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 24px;
-      font-size: 0.95rem;
-      color: var(--muted);
-    }
-
-    .nav-links a:hover {
+    .brand {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
       color: var(--accent);
+      letter-spacing: 0.1em;
     }
 
+    nav { display: flex; gap: 22px; flex-wrap: wrap; }
+    nav a { font-size: 13px; color: var(--muted); font-weight: 500; letter-spacing: 0.04em; transition: color 0.2s; }
+    nav a:hover { color: var(--text); text-decoration: none; }
+
+    /* ── HERO ── */
     .hero {
-      padding: 72px 0 54px;
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 42px;
-      align-items: center;
+      grid-template-columns: 1fr 340px;
+      gap: 48px;
+      align-items: start;
+      padding: 72px 0 80px;
     }
 
-    .tag {
+    .eyebrow {
       display: inline-flex;
       align-items: center;
-      padding: 7px 12px;
+      gap: 8px;
+      padding: 6px 14px;
+      border: 1px solid rgba(79,163,232,0.3);
       border-radius: 999px;
-      background: rgba(15, 118, 110, 0.1);
-      color: var(--accent-dark);
-      font-weight: 600;
-      font-size: 0.9rem;
-      margin-bottom: 20px;
+      background: rgba(79,163,232,0.07);
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--accent2);
+      letter-spacing: 0.08em;
+      margin-bottom: 28px;
+    }
+
+    .pulse {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.75); }
     }
 
     h1 {
-      font-size: clamp(2.4rem, 5vw, 4.8rem);
-      line-height: 1.05;
-      letter-spacing: -0.055em;
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(44px, 5.5vw, 78px);
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      color: #fff;
       margin-bottom: 22px;
     }
 
     .subtitle {
-      font-size: 1.25rem;
-      color: var(--muted);
-      max-width: 680px;
-      margin-bottom: 32px;
+      font-size: 18px;
+      color: #adb5d0;
+      line-height: 1.7;
+      max-width: 640px;
+      margin-bottom: 36px;
     }
 
-    .buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-    }
+    .subtitle em { color: var(--accent2); font-style: normal; font-weight: 500; }
+
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 
     .btn {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      padding: 13px 20px;
-      border-radius: 12px;
-      font-weight: 650;
-      transition: all 0.2s ease;
-      border: 1px solid transparent;
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: #ffffff;
-      box-shadow: 0 10px 24px rgba(15, 118, 110, 0.2);
-    }
-
-    .btn-primary:hover {
-      background: var(--accent-dark);
-      transform: translateY(-1px);
-    }
-
-    .btn-secondary {
-      background: #ffffff;
-      border-color: var(--border);
-      color: var(--text);
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      transform: translateY(-1px);
-    }
-
-    .hero-card {
+      gap: 6px;
+      padding: 11px 20px;
+      border-radius: 999px;
+      font-size: 13.5px;
+      font-weight: 600;
+      border: 1px solid var(--line);
       background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 28px;
-      padding: 30px;
-      box-shadow: var(--shadow);
+      color: var(--text);
+      transition: all 0.2s ease;
+      letter-spacing: 0.02em;
     }
 
-    .hero-card h2 {
-      font-size: 1.15rem;
-      margin-bottom: 18px;
+    .btn.primary {
+      background: var(--accent);
+      color: #06111f;
+      border-color: var(--accent);
     }
+
+    .btn:hover { transform: translateY(-2px); text-decoration: none; border-color: var(--accent); box-shadow: 0 8px 24px rgba(79,163,232,0.2); }
+
+    /* ── PROFILE CARD ── */
+    .profile-card {
+      background: linear-gradient(160deg, #181d2e, #0f1320);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 28px 64px rgba(0,0,0,0.4);
+    }
+
+    .profile-card-img {
+      height: 240px;
+      background:
+        radial-gradient(circle at 40% 50%, rgba(79,163,232,0.22), transparent 60%),
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.025), rgba(255,255,255,0.025) 1px, transparent 1px, transparent 14px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: center;
+      padding: 20px;
+      line-height: 1.6;
+    }
+
+    .profile-info { padding: 22px; }
+    .profile-info h2 { font-family: 'DM Serif Display', serif; font-size: 22px; color: #fff; margin-bottom: 6px; }
+    .profile-info p { color: var(--muted); font-size: 14px; line-height: 1.65; }
+
+    .address-block {
+      margin-top: 16px;
+      padding: 14px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 12px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11.5px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    /* ── SECTIONS ── */
+    section { margin-top: 80px; }
+
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 16px;
+      margin-bottom: 28px;
+      gap: 24px;
+    }
+
+    .section-head h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 32px;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+
+    .section-head p { color: var(--muted); font-size: 14px; max-width: 520px; line-height: 1.6; }
+
+    /* ── ABOUT GRID ── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 24px;
+    }
+
+    .panel h3 {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .panel p, .panel li { color: #b0b8d4; font-size: 15px; line-height: 1.75; }
+    .panel ul { padding-left: 18px; }
+    .panel li { margin-bottom: 6px; }
+
+    /* ── TIMELINE (education / work) ── */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+
+    .tl-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 0 24px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--line);
+      position: relative;
+    }
+
+    .tl-item:last-child { border-bottom: none; }
+
+    .tl-year {
+      font-family: 'DM Mono', monospace;
+      font-size: 11.5px;
+      color: var(--muted);
+      padding-top: 4px;
+      line-height: 1.5;
+    }
+
+    .tl-body h4 { font-size: 16px; color: #fff; margin-bottom: 4px; font-weight: 600; }
+    .tl-body p { font-size: 14px; color: #8a90aa; line-height: 1.65; }
+    .tl-body .inst { color: var(--accent2); font-weight: 500; font-size: 14px; }
+
+    /* ── PROJECTS ── */
+    .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+      border-color: rgba(79,163,232,0.35);
+    }
+
+    .project-img {
+      height: 150px;
+      background:
+        radial-gradient(circle at 50% 40%, rgba(79,163,232,0.2), transparent 65%),
+        repeating-linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.04) 1px, transparent 1px, transparent 14px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+      padding: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .project-body { padding: 18px; }
+    .project-body h3 { font-size: 15px; color: var(--accent2); margin-bottom: 8px; font-weight: 600; line-height: 1.4; }
+    .project-body p { font-size: 13.5px; color: #8a90aa; line-height: 1.7; }
+
+    /* ── METRICS ── */
+    .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px; }
 
     .metric {
-      padding: 18px 0;
-      border-top: 1px solid var(--border);
-    }
-
-    .metric:first-of-type {
-      border-top: none;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px;
     }
 
     .metric strong {
       display: block;
-      font-size: 1.55rem;
-      color: var(--accent-dark);
+      font-family: 'DM Serif Display', serif;
+      font-size: 32px;
+      color: #fff;
+      margin-bottom: 6px;
     }
 
-    .metric span {
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
+    .metric span { color: var(--muted); font-size: 13px; line-height: 1.5; }
 
-    section {
-      padding: 54px 0;
-    }
+    /* ── PUBLICATIONS ── */
+    .pub-list { display: flex; flex-direction: column; gap: 14px; }
 
-    .section-title {
-      font-size: 2rem;
-      letter-spacing: -0.03em;
-      margin-bottom: 14px;
-    }
-
-    .section-desc {
-      color: var(--muted);
-      max-width: 760px;
-      margin-bottom: 28px;
-      font-size: 1.05rem;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .card {
+    .pub-item {
       background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 24px;
-      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.04);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px 20px;
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 14px;
+      align-items: start;
+      transition: border-color 0.2s;
     }
 
-    .card h3 {
-      font-size: 1.15rem;
-      margin-bottom: 10px;
-    }
+    .pub-item:hover { border-color: rgba(79,163,232,0.3); }
 
-    .card p {
+    .pub-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
       color: var(--muted);
-      font-size: 0.98rem;
+      padding-top: 3px;
     }
 
-    .list {
-      margin-top: 14px;
-      padding-left: 18px;
-      color: var(--muted);
-      font-size: 0.96rem;
+    .pub-text { font-size: 14px; color: #b0b8d4; line-height: 1.7; }
+    .pub-text .me { color: var(--accent2); font-weight: 600; }
+    .pub-text .journal { color: var(--gold); font-style: italic; }
+
+    /* ── AWARDS ── */
+    .awards-list { display: flex; flex-direction: column; gap: 12px; }
+
+    .award-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px 20px;
     }
 
-    .list li {
-      margin-bottom: 7px;
+    .award-icon { font-size: 20px; flex-shrink: 0; }
+    .award-text { font-size: 14.5px; color: #b0b8d4; line-height: 1.5; }
+
+    /* ── CONFERENCES ── */
+    .conf-list { display: flex; flex-direction: column; gap: 12px; }
+
+    .conf-item {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: grid;
+      grid-template-columns: 60px 1fr;
+      gap: 14px;
+      align-items: start;
     }
 
-    .contact-box {
-      background: #0f766e;
-      color: #ffffff;
+    .conf-year {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--accent);
+      padding-top: 2px;
+    }
+
+    .conf-text { font-size: 14px; color: #b0b8d4; line-height: 1.65; }
+    .conf-text strong { color: #d0d8f0; }
+
+    /* ── TAGS ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 18px; }
+
+    .tag {
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(79,163,232,0.09);
+      border: 1px solid rgba(79,163,232,0.2);
+      color: #c4dff7;
+      font-size: 12.5px;
+    }
+
+    /* ── CONTACT ── */
+    .contact-card {
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 28px;
+      background: linear-gradient(135deg, rgba(79,163,232,0.12), rgba(13,16,24,0.95));
+      border: 1px solid rgba(79,163,232,0.22);
       border-radius: 28px;
-      padding: 36px;
+      padding: 34px;
+    }
+
+    .contact-card h2 { font-family: 'DM Serif Display', serif; font-size: 34px; color: #fff; margin-bottom: 14px; }
+    .contact-card p { color: #9aa0bc; line-height: 1.7; font-size: 15px; }
+
+    .contact-links { display: grid; gap: 12px; align-content: center; }
+
+    /* ── FOOTER ── */
+    footer {
+      margin-top: 60px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      gap: 24px;
-    }
-
-    .contact-box p {
-      color: rgba(255, 255, 255, 0.82);
-      margin-top: 8px;
-      max-width: 650px;
-    }
-
-    .contact-box .btn {
-      background: #ffffff;
-      color: var(--accent-dark);
-      white-space: nowrap;
-    }
-
-    footer {
-      padding: 36px 0;
+      flex-wrap: wrap;
+      gap: 12px;
       color: var(--muted);
-      font-size: 0.92rem;
-      text-align: center;
+      font-size: 12.5px;
+      font-family: 'DM Mono', monospace;
     }
 
-    @media (max-width: 860px) {
-      .hero {
-        grid-template-columns: 1fr;
-        padding-top: 40px;
-      }
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero, .about-grid, .contact-card { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr 1fr; }
+      .metrics { grid-template-columns: repeat(2, 1fr); }
+      .section-head { flex-direction: column; align-items: flex-start; }
+    }
 
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      .contact-box {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .nav-links {
-        display: none;
-      }
+    @media (max-width: 580px) {
+      .projects-grid, .metrics { grid-template-columns: 1fr; }
+      .tl-item { grid-template-columns: 1fr; gap: 4px; }
+      .conf-item { grid-template-columns: 1fr; }
+      header { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
 
 <body>
+<div class="page">
+
   <header>
-    <div class="container">
-      <nav>
-        <a class="logo" href="#">SUNMIRS</a>
-        <div class="nav-links">
-          <a href="#about">About</a>
-          <a href="#work">Work</a>
-          <a href="#platforms">Platforms</a>
-          <a href="#contact">Contact</a>
-        </div>
-      </nav>
-    </div>
+    <div class="brand">zebrafish.cc</div>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#projects">Projects</a>
+      <a href="#publications">Publications</a>
+      <a href="#conferences">Conferences</a>
+      <a href="#contact">Contact</a>
+    </nav>
   </header>
 
   <main>
-    <section class="hero container">
+
+    <!-- ── HERO ── -->
+    <div class="hero">
       <div>
-        <div class="tag">Auditory & Vestibular Research · Zebrafish Instrumentation</div>
-        <h1 style="font-size: 56px;">Building precise tools for zebrafish behavior research</h1>
+        <div class="eyebrow"><span class="pulse"></span> Stanford University · Department of Otolaryngology</div>
+        <h1>Peng Sun,<br/><em style="font-style:italic;color:#7ec8f4;">PhD</em></h1>
         <p class="subtitle">
-          I develop behavioral instrumentation and analysis systems for zebrafish auditory and vestibular studies, including VOR, startle/GPIAS, and OKR platforms.
+          Postdoctoral Researcher at Stanford Medicine studying <em>auditory and vestibular function</em>
+          through zebrafish behavioral assays, molecular genetics, calcium imaging,
+          and quantitative engineering platforms.
         </p>
-        <div class="buttons">
-          <a class="btn btn-primary" href="https://zebrafish.cc">View Zebrafish Platform</a>
-          <a class="btn btn-secondary" href="mailto:hearing@zebrafish.cc">Contact Me</a>
+        <div class="hero-actions">
+          <a class="btn primary" href="mailto:admin@sunmirs.com">Contact Me</a>
+          <a class="btn" href="https://scholar.google.com.hk/citations?user=IwnOpHgAAAAJ&hl=zh-CN" target="_blank" rel="noopener">Google Scholar</a>
+          <a class="btn" href="https://profiles.stanford.edu/peng-sun?tab=bio" target="_blank" rel="noopener">Stanford Profile</a>
+          <a class="btn" href="https://sunmirs.com" target="_blank" rel="noopener">sunmirs.com</a>
         </div>
       </div>
 
-      <aside class="hero-card">
-        <h2>Research Focus</h2>
-        <div class="metric">
-          <strong>VOR</strong>
-          <span>Vestibulo-ocular reflex measurement and 3D eye tracking</span>
+      <aside class="profile-card">
+        <div class="profile-card-img">
+          Add your photo or<br/>experimental image here
         </div>
-        <div class="metric">
-          <strong>GPIAS</strong>
-          <span>Acoustic startle, gap prepulse inhibition, and synchronized stimulation</span>
-        </div>
-        <div class="metric">
-          <strong>OKR</strong>
-          <span>Optokinetic response imaging and behavioral quantification</span>
+        <div class="profile-info">
+          <h2>Peng Sun, PhD</h2>
+          <p>Postdoctoral Research Fellow<br/>Dept. of Otolaryngology – Head &amp; Neck Surgery</p>
+          <div class="address-block">
+            240 Pasteur Dr, BMI Building<br/>
+            Room 0450, Palo Alto, CA 94304<br/>
+            Tel: +1 (408) 489-7284
+          </div>
         </div>
       </aside>
-    </section>
+    </div>
 
+    <!-- ── ABOUT ── -->
     <section id="about">
-      <div class="container">
-        <h2 class="section-title">About</h2>
-        <p class="section-desc">
-          My work focuses on designing experimental systems that combine precise stimulus control, high-speed imaging, and automated behavioral analysis. These tools support studies of auditory and vestibular function in larval zebrafish and related model systems.
-        </p>
+      <div class="section-head">
+        <h2>About</h2>
+        <p>Academic background and current research focus.</p>
       </div>
-    </section>
-
-    <section id="work">
-      <div class="container">
-        <h2 class="section-title">Featured Work</h2>
-        <p class="section-desc">
-          Selected areas of development across hardware, software, imaging, and behavioral analysis.
-        </p>
-
-        <div class="grid">
-          <div class="card">
-            <h3>Zebrafish VOR System</h3>
-            <p>Instrumentation for vestibular stimulation and quantitative eye movement analysis.</p>
-            <ul class="list">
-              <li>3D eye modeling and reconstruction</li>
-              <li>Rotational stimulus control</li>
-              <li>Automated response quantification</li>
-            </ul>
+      <div class="about-grid">
+        <div class="panel">
+          <h3>Education</h3>
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-year">2016–2021</div>
+              <div class="tl-body">
+                <h4>PhD · Electrical and Computer Engineering</h4>
+                <p class="inst">University of Macau – Southern University of Science and Technology Joint PhD Program</p>
+                <p>Thesis: Behavioral assays for evaluating hearing and balance function in zebrafish larvae</p>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-year">2012–2015</div>
+              <div class="tl-body">
+                <h4>Master of Engineering · Optical Engineering</h4>
+                <p class="inst">South China Normal University, Guangzhou</p>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-year">2008–2012</div>
+              <div class="tl-body">
+                <h4>Bachelor of Engineering · Nuclear Engineering and Technology</h4>
+                <p class="inst">Engineering &amp; Technical College of Chengdu University of Technology, Leshan</p>
+              </div>
+            </div>
           </div>
+        </div>
 
-          <div class="card">
-            <h3>Startle & GPIAS Platform</h3>
-            <p>Behavioral platform for acoustic startle and gap prepulse inhibition experiments.</p>
-            <ul class="list">
-              <li>Audio stimulus generation</li>
-              <li>LED-based timing synchronization</li>
-              <li>C-bend and locomotion analysis</li>
-            </ul>
-          </div>
-
-          <div class="card">
-            <h3>OKR Imaging Setup</h3>
-            <p>Visual stimulation and imaging system for optokinetic response measurement.</p>
-            <ul class="list">
-              <li>Visual stimulus presentation</li>
-              <li>Eye tracking workflow</li>
-              <li>Analysis pipeline development</li>
-            </ul>
+        <div class="panel">
+          <h3>Work Experience</h3>
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-year">2021.10 –</div>
+              <div class="tl-body">
+                <h4>Postdoctoral Research Fellow</h4>
+                <p class="inst">Stanford University</p>
+                <p>Design behavioral assays and equipment for evaluating hearing and balance functions in zebrafish larvae.</p>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-year">2015–2016</div>
+              <div class="tl-body">
+                <h4>Research Assistant</h4>
+                <p class="inst">Southern University of Science and Technology</p>
+                <p>Design VOR instrument for assessment of balance function in zebrafish.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="platforms">
-      <div class="container">
-        <h2 class="section-title">Zebrafish Platform</h2>
-        <p class="section-desc">
-          For a more focused overview of zebrafish behavioral instrumentation, visit the dedicated project site.
+    <!-- ── RESEARCH ── -->
+    <section id="research">
+      <div class="section-head">
+        <h2>Research</h2>
+        <p>Integrating experimental biology and engineering to study sensory function at behavioral, cellular, and circuit levels.</p>
+      </div>
+      <div class="panel">
+        <p>
+          I develop and apply integrated experimental platforms combining zebrafish behavioral assays,
+          molecular genetics, and calcium imaging to investigate neural activity and uncover circuit
+          mechanisms underlying auditory and vestibular function. Current work explores the role of
+          Tmc1/2 proteins in inner ear hair cells and multisensory integration in the zebrafish brain.
         </p>
-        <a class="btn btn-primary" href="https://zebrafish.cc">Go to zebrafish.cc</a>
+        <p style="margin-top:14px;">
+          This work bridges optical engineering, electronic and computer engineering, biomedical engineering,
+          neuroscience, and quantitative analysis to enable precise characterization of sensory systems.
+        </p>
+        <div class="tags">
+          <span class="tag">Zebrafish Behavior</span>
+          <span class="tag">Auditory Neuroscience</span>
+          <span class="tag">Vestibular Function</span>
+          <span class="tag">Calcium Imaging</span>
+          <span class="tag">Molecular Genetics</span>
+          <span class="tag">Tmc1/2 Proteins</span>
+          <span class="tag">Hair Cells</span>
+          <span class="tag">Optical Engineering</span>
+          <span class="tag">Biomedical Engineering</span>
+          <span class="tag">GPIAS / Startle Assay</span>
+          <span class="tag">VOR Measurement</span>
+          <span class="tag">Multisensory Integration</span>
+        </div>
       </div>
     </section>
 
+    <!-- ── PROJECTS ── -->
+    <section id="projects">
+      <div class="section-head">
+        <h2>Selected Projects</h2>
+        <p>Representative platforms and computational tools for studying sensory function in zebrafish.</p>
+      </div>
+      <div class="projects-grid">
+        <article class="project-card">
+          <div class="project-img">VOR setup / eye-tracking result</div>
+          <div class="project-body">
+            <h3>Quantitative VOR Measurement System</h3>
+            <p>High-precision platform for measuring vestibulo-ocular reflex in larval zebrafish using synchronized visual stimulation, imaging, and quantitative eye tracking. Patent: 201810321528.7</p>
+          </div>
+        </article>
+        <article class="project-card">
+          <div class="project-img">Acoustic stimulation / behavior tracking</div>
+          <div class="project-body">
+            <h3>Acoustic Startle &amp; GPIAS Platform</h3>
+            <p>Integrated behavioral system for studying auditory processing through acoustic startle response and gap-prepulse inhibition (GPIAS) assays in zebrafish larvae.</p>
+          </div>
+        </article>
+        <article class="project-card">
+          <div class="project-img">3D tracking / reconstruction figure</div>
+          <div class="project-body">
+            <h3>3D Eye Tracking &amp; Reconstruction</h3>
+            <p>Computational pipeline for reconstructing three-dimensional zebrafish eye movement dynamics and analyzing sensory-motor transformations with high spatial precision.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ── PUBLICATIONS ── -->
+    <section id="publications">
+      <div class="section-head">
+        <h2>Publications</h2>
+        <p>Peer-reviewed research in zebrafish sensory neuroscience and instrumentation.</p>
+      </div>
+
+      <div class="metrics">
+        <div class="metric"><strong>13</strong><span>Peer-reviewed publications</span></div>
+        <div class="metric"><strong>5</strong><span>First or co-first author papers</span></div>
+        <div class="metric"><strong>5</strong><span>Patents</span></div>
+        <div class="metric"><strong>ARO</strong><span>Travel award &amp; multiple oral presentations</span></div>
+      </div>
+
+      <div class="pub-list">
+        <div class="pub-item">
+          <div class="pub-num">1</div>
+          <div class="pub-text">Anna Shipman, Yan Gao, Desheng Liu, Shan Sun, Jingjing Zang, <span class="me">Peng Sun</span> et al. Defects in exosome biogenesis are associated with sensorimotor defects in zebrafish vps4a mutants. <span class="journal">Journal of Neuroscience</span> 2024. 44(50).</div>
+        </div>
+        <div class="pub-item">
+          <div class="pub-num">2</div>
+          <div class="pub-text">Eliot Smith†, <span class="me">Peng Sun†</span>, Shengyang Kevin Yu, David Raible and Teresa Nicolson. Differential expression of mechanotransduction complex genes in auditory/vestibular hair cells in zebrafish. <span class="journal">Frontiers in Molecular Neuroscience</span>, 2023, 16: 1274822. <em>(Co-first author)</em></div>
+        </div>
+        <div class="pub-item">
+          <div class="pub-num">3</div>
+          <div class="pub-text"><span class="me">Peng Sun</span>, Eliot Smith, and Teresa Nicolson. Transmembrane channel-like (Tmc) subunits contribute to frequency sensitivity in the zebrafish utricle. <span class="journal">Journal of Neuroscience</span>, 2024, 44(1).</div>
+        </div>
+        <div class="pub-item">
+          <div class="pub-num">4</div>
+          <div class="pub-text">Xiaojie Yang†, <span class="me">Peng Sun†</span>, Jian-Ping Wu, et al. Nondestructive and objective assessment of the vestibular function in rodent models: A review. <span class="journal">Neuroscience Letters</span>, 2020, 717: 134608. <em>(Co-first author)</em></div>
+        </div>
+        <div class="pub-item">
+          <div class="pub-num">5</div>
+          <div class="pub-text"><span class="me">Peng Sun</span>, Yingla Zhang, Feng Zhao, et al. An Assay for Systematically Quantifying the Vestibulo-Ocular Reflex to Assess Vestibular Function in Zebrafish Larvae. <span class="journal">Frontiers in Cellular Neuroscience</span>, 2018, 12.</div>
+        </div>
+        <div class="pub-item">
+          <div class="pub-num">6</div>
+          <div class="pub-text">Shanshan Han, Xiliang Liu, Shanglun Xie, <span class="me">Peng Sun</span> et al. Knockout of ush2a gene in zebrafish causes hearing impairment and late onset rod-cone dystrophy. <span class="journal">Human Genetics</span>, 2018, 137(10): 779–794.</div>
+        </div>
+        <div class="pub-item">
+          <div class="pub-num">7</div>
+          <div class="pub-text">Qin Yang, <span class="me">Peng Sun</span>, Shi Chen, Hongzhe Li and Fangyi Chen. Behavioral methods for the functional assessment of hair cells in zebrafish. <span class="journal">Frontiers of Medicine</span>, 2017: 1–13.</div>
+        </div>
+        <div class="pub-item">
+          <div class="pub-num">8</div>
+          <div class="pub-text">Changquan Wang, Zhenmin Zhong, <span class="me">Peng Sun</span>, et al. Evaluation of the Hair Cell Regeneration in Zebrafish Larvae by Measuring and Quantifying the Startle Responses. <span class="journal">Neural Plasticity</span>, 2017.</div>
+        </div>
+        <div class="pub-item">
+          <div class="pub-num">9</div>
+          <div class="pub-text"><span class="me">Peng Sun</span>, Liyun Zhong, Chunshu Luo, Wenhu Niu and Xiaoxu Lu. Visual measurement of the evaporation process of a sessile droplet by dual-channel simultaneous phase-shifting interferometry. <span class="journal">Scientific Reports</span>, 2015, 5.</div>
+        </div>
+        <div class="pub-item">
+          <div class="pub-num">10–13</div>
+          <div class="pub-text">Additional optics and phase-shifting interferometry publications in <span class="journal">Applied Physics B</span>, <span class="journal">Optical and Quantum Electronics</span>, <span class="journal">Journal of Optics</span>, and <span class="journal">Chinese Journal of Lasers</span> (2015).
+          Full list on <a href="https://scholar.google.com.hk/citations?user=IwnOpHgAAAAJ&hl=zh-CN" target="_blank">Google Scholar</a>.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CONFERENCES ── -->
+    <section id="conferences">
+      <div class="section-head">
+        <h2>Conferences</h2>
+        <p>Selected presentations at international meetings.</p>
+      </div>
+      <div class="conf-list">
+        <div class="conf-item">
+          <div class="conf-year">2025</div>
+          <div class="conf-text"><strong>48th ARO MidWinter Meeting</strong> · Orlando, FL · Podium presentation: <em>"Multisensory Integration in the Zebrafish Brain: Hearing Loss Affects the Bimodal Audio–Visual Interactions in the Tectum"</em></div>
+        </div>
+        <div class="conf-item">
+          <div class="conf-year">2024</div>
+          <div class="conf-text"><strong>47th ARO MidWinter Meeting</strong> · Anaheim, CA</div>
+        </div>
+        <div class="conf-item">
+          <div class="conf-year">2023</div>
+          <div class="conf-text"><strong>46th ARO MidWinter Meeting</strong> · Orlando, FL · Podium presentation: <em>"The C-Terminus of MET Component Tmie Contributes to High Frequency Sensitivity of the Vestibular System"</em> · ARO Travel Award</div>
+        </div>
+        <div class="conf-item">
+          <div class="conf-year">2020</div>
+          <div class="conf-text"><strong>43rd ARO MidWinter Meeting</strong> · San Jose, CA</div>
+        </div>
+        <div class="conf-item">
+          <div class="conf-year">2019</div>
+          <div class="conf-text"><strong>14th International Zebrafish Conference</strong> · Suzhou, China</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CONTACT ── -->
     <section id="contact">
-      <div class="container">
-        <div class="contact-box">
-          <div>
-            <h2>Open to research collaboration and instrumentation discussions.</h2>
-            <p>
-              For questions about zebrafish behavioral systems, experimental platforms, or related collaborations, please feel free to reach out.
-            </p>
-          </div>
-          <a class="btn" href="mailto:hearing@zebrafish.cc">hearing@zebrafish.cc</a>
+      <div class="contact-card">
+        <div>
+          <h2>Get in Touch</h2>
+          <p>
+            I welcome conversations about zebrafish behavioral systems, auditory and vestibular neuroscience,
+            quantitative imaging, and collaborative engineering platforms for sensory biology.
+          </p>
+        </div>
+        <div class="contact-links">
+          <a class="btn primary" href="mailto:admin@sunmirs.com">admin@sunmirs.com</a>
+          <a class="btn" href="https://scholar.google.com.hk/citations?user=IwnOpHgAAAAJ&hl=zh-CN" target="_blank" rel="noopener">Google Scholar</a>
+          <a class="btn" href="https://profiles.stanford.edu/peng-sun?tab=bio" target="_blank" rel="noopener">Stanford Profile</a>
         </div>
       </div>
     </section>
+
   </main>
 
   <footer>
-    <div class="container">
-      © 2026 sunmirs. All rights reserved.
-    </div>
+    <span>© 2026 Peng Sun, PhD</span>
+    <span>zebrafish.cc · Stanford Medicine · Auditory &amp; Vestibular Neuroscience</span>
   </footer>
+
+</div>
 </body>
 </html>
